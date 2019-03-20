@@ -1,0 +1,8 @@
+// http://localhost:8085/novo-usuario
+{
+  "nome": "Welson",
+  "sobrenome": "Teles",
+  "email": "welsonlimawlsn@gmail.com",
+  "usuario": "welsonlimawlsn",
+  "senha": "123456789"
+}
