@@ -3,6 +3,7 @@ package br.com.welson.meucontrole.servicos.implemetacoes;
 import br.com.welson.meucontrole.excecoes.NotFoundException;
 import br.com.welson.meucontrole.persistencia.modelos.Categoria;
 import br.com.welson.meucontrole.persistencia.repositorios.CategoriaRepositorio;
+import br.com.welson.meucontrole.servicos.CategoriaService;
 import br.com.welson.meucontrole.servicos.CrudService;
 import br.com.welson.meucontrole.validadores.ValidaCamposEntidade;
 import br.com.welson.meucontrole.validadores.ValidaCategoria;
@@ -10,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CategoriaServiceImpl implements CrudService<Categoria> {
+public class CategoriaServiceImpl implements CategoriaService {
 
     private final CategoriaRepositorio categoriaRepositorio;
 
