@@ -1,14 +1,12 @@
 package br.com.welson.meucontrole.persistencia.modelos;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class NovaSenha {
 
     private String senha;
 
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
 }

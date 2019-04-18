@@ -42,7 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         public Collection<? extends GrantedAuthority> getAuthorities() {
             List<GrantedAuthority> authorityListAdministrador = AuthorityUtils.createAuthorityList("ROLE_ADMINISTRADOR", "ROLE_USUARIO");
             List<GrantedAuthority> authorityListUsuario = AuthorityUtils.createAuthorityList("ROLE_USUARIO");
-            return isAdministrador() ? authorityListAdministrador : authorityListUsuario;
+            return getAdministrador() ? authorityListAdministrador : authorityListUsuario;
         }
 
         @Override
@@ -72,7 +72,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         @Override
         public boolean isEnabled() {
-            return isAtiva();
+            return getAtiva();
         }
     }
 }

@@ -1,7 +1,12 @@
 package br.com.welson.meucontrole.persistencia.modelos;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 
+@Getter
+@Setter
 public class Saldo {
 
     private BigDecimal saldo;
@@ -10,11 +15,4 @@ public class Saldo {
         this.saldo = saldo;
     }
 
-    public BigDecimal getSaldo() {
-        return saldo;
-    }
-
-    public void setSaldo(BigDecimal saldo) {
-        this.saldo = saldo;
-    }
 }

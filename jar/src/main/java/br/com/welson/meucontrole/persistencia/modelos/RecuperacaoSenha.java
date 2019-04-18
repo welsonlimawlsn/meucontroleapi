@@ -1,5 +1,8 @@
 package br.com.welson.meucontrole.persistencia.modelos;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -8,6 +11,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tbl_recuperacoes_senha")
+@Getter
+@Setter
 public class RecuperacaoSenha extends Entidade {
 
     @Column(nullable = false)
@@ -32,35 +37,4 @@ public class RecuperacaoSenha extends Entidade {
         this.usuario = usuario;
     }
 
-    public String getHash() {
-        return hash;
-    }
-
-    public void setHash(String hash) {
-        this.hash = hash;
-    }
-
-    public LocalDateTime getValidade() {
-        return validade;
-    }
-
-    public void setValidade(LocalDateTime validade) {
-        this.validade = validade;
-    }
-
-    public Boolean getUsado() {
-        return usado;
-    }
-
-    public void setUsado(Boolean usado) {
-        this.usado = usado;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
 }
