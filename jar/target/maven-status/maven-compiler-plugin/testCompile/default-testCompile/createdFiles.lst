@@ -1,0 +1,4 @@
+br\com\welson\meucontrole\endpoint\AtivacaoContaEndpointTest.class
+br\com\welson\meucontrole\endpoint\RecuperacaoSenhaEndpointTest.class
+br\com\welson\meucontrole\MeuControleApplicationTests.class
+br\com\welson\meucontrole\endpoint\UsuarioEndpointTest.class
