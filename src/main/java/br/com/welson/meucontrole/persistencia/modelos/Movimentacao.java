@@ -1,6 +1,8 @@
 package br.com.welson.meucontrole.persistencia.modelos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +15,8 @@ import static javax.persistence.InheritanceType.TABLE_PER_CLASS;
 
 @Entity
 @Inheritance(strategy = TABLE_PER_CLASS)
+@Getter
+@Setter
 public abstract class Movimentacao extends Entidade {
 
     @Column(nullable = false)
@@ -70,59 +74,4 @@ public abstract class Movimentacao extends Entidade {
         valor = valor.negate();
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
-    }
-
-    public LocalDate getData() {
-        return data;
-    }
-
-    public void setData(LocalDate data) {
-        this.data = data;
-    }
-
-    public Conta getConta() {
-        return conta;
-    }
-
-    public void setConta(Conta conta) {
-        this.conta = conta;
-    }
-
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
-
-    public MovimentacaoParcelada getMovimentacaoParcelada() {
-        return movimentacaoParcelada;
-    }
-
-    public void setMovimentacaoParcelada(MovimentacaoParcelada movimentacaoParcelada) {
-        this.movimentacaoParcelada = movimentacaoParcelada;
-    }
-
-    public Boolean getConsolidada() {
-        return consolidada;
-    }
-
-    public void setConsolidada(Boolean consolidada) {
-        this.consolidada = consolidada;
-    }
 }

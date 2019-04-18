@@ -1,12 +1,16 @@
 package br.com.welson.meucontrole.persistencia.modelos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "tbl_contas")
+@Getter
+@Setter
 public class Conta extends Entidade {
 
     @JsonIgnore
@@ -40,35 +44,4 @@ public class Conta extends Entidade {
         this.id = id;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public List<Movimentacao> getMovimentacoes() {
-        return movimentacoes;
-    }
-
-    public void setMovimentacoes(List<Movimentacao> movimentacoes) {
-        this.movimentacoes = movimentacoes;
-    }
-
-    public List<MovimentacaoParcelada> getMovimentacaoParceladas() {
-        return movimentacaoParceladas;
-    }
-
-    public void setMovimentacaoParceladas(List<MovimentacaoParcelada> movimentacaoParceladas) {
-        this.movimentacaoParceladas = movimentacaoParceladas;
-    }
 }
