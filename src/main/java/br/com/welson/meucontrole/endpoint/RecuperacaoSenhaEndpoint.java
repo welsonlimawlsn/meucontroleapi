@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static br.com.welson.meucontrole.util.ErrorMessages.PAGINA_NAO_EXISTE;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -30,7 +31,7 @@ public class RecuperacaoSenhaEndpoint {
     public ResponseEntity recuperar(@RequestBody NovaSenha novaSenha, @PathVariable String hash) {
         if (recuperacaoSenhaService.recuperarSenha(hash, novaSenha))
             return new ResponseEntity<>(OK);
-        throw new NotFoundException("Essa pagina não existe");
+        throw new NotFoundException(PAGINA_NAO_EXISTE);
     }
 
     @GetMapping("/recuperacao-senha/validar/{hash}")

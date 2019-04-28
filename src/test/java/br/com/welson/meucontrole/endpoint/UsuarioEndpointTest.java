@@ -5,6 +5,7 @@ import br.com.welson.meucontrole.persistencia.modelos.Usuario;
 import br.com.welson.meucontrole.persistencia.repositorios.AtivacaoContaRepositorio;
 import br.com.welson.meucontrole.persistencia.repositorios.ContaRepositorio;
 import br.com.welson.meucontrole.persistencia.repositorios.UsuarioRepositorio;
+import br.com.welson.meucontrole.util.ErrorMessages;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,8 +22,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.LinkedHashMap;
 import java.util.Optional;
 
+import static br.com.welson.meucontrole.util.ErrorMessages.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @RunWith(SpringRunner.class)
@@ -43,7 +46,7 @@ public class UsuarioEndpointTest {
     private TestRestTemplate testRestTemplate;
 
     private Usuario usuario = mockUsuario();
-    private UsuarioDTO usuarioDTO = mockUsuarioDTO();
+    private UsuarioDTO usuarioDTO;
 
     public static UsuarioDTO mockUsuarioDTO() {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
@@ -56,13 +59,12 @@ public class UsuarioEndpointTest {
     }
 
     public static Usuario mockUsuario() {
-        Usuario usuario = mockUsuarioDTO().convertToObject();
-        usuario.setId(1L);
-        return usuario;
+        return mockUsuarioDTO().convertToObject();
     }
 
     @Before
     public void setupMock() {
+        usuarioDTO = mockUsuarioDTO();
         BDDMockito.when(usuarioRepositorio.save(usuarioDTO.convertToObject())).thenReturn(usuario);
     }
 
@@ -75,89 +77,89 @@ public class UsuarioEndpointTest {
 
     @Test
     public void criarUsuarioNomeNullDeveRetornarBadRequest() {
-        UsuarioDTO usuarioFaltandoNome = mockUsuarioDTO();
-        usuarioFaltandoNome.setNome(null);
-        tentandoCriarUsuarioComDadosIncompletos(usuarioFaltandoNome);
+        usuarioDTO.setNome(null);
+        ResponseEntity<Object> responseEntity = tentandoCriarUsuarioComDadosIncompletos(usuarioDTO);
+        conferirMessagemErro(NOME_USUARIO_OBRIGATORIO, responseEntity);
     }
 
     @Test
     public void criarUsuarioNomeEmptyDeveRetornarBadRequest() {
-        UsuarioDTO usuarioFaltandoNome = mockUsuarioDTO();
-        usuarioFaltandoNome.setNome("");
-        tentandoCriarUsuarioComDadosIncompletos(usuarioFaltandoNome);
+        usuarioDTO.setNome("");
+        conferirMessagemErro(NOME_USUARIO_OBRIGATORIO, tentandoCriarUsuarioComDadosIncompletos(usuarioDTO));
     }
 
     @Test
     public void criarUsuarioNomeDeUsuarioNullDeveRetornarBadRequest() {
-        UsuarioDTO usuarioFaltandoNome = mockUsuarioDTO();
-        usuarioFaltandoNome.setUsuario(null);
-        tentandoCriarUsuarioComDadosIncompletos(usuarioFaltandoNome);
+        usuarioDTO.setUsuario(null);
+        conferirMessagemErro(ID_ENTIDADE_NAO_NULO, tentandoCriarUsuarioComDadosIncompletos(usuarioDTO));
     }
 
     @Test
     public void criarUsuarioNomeDeUsuarioEmptyDeveRetornarBadRequest() {
-        UsuarioDTO usuarioFaltandoNome = mockUsuarioDTO();
-        usuarioFaltandoNome.setUsuario("");
-        tentandoCriarUsuarioComDadosIncompletos(usuarioFaltandoNome);
+        usuarioDTO.setUsuario("");
+        conferirMessagemErro(USUARIO_USUARIO_OBRIGATORIO, tentandoCriarUsuarioComDadosIncompletos(usuarioDTO));
     }
 
     @Test
     public void criarUsuarioSobrenomeNullDeveRetornarBadRequest() {
-        UsuarioDTO usuarioFaltandoNome = mockUsuarioDTO();
-        usuarioFaltandoNome.setSobrenome(null);
-        tentandoCriarUsuarioComDadosIncompletos(usuarioFaltandoNome);
+        usuarioDTO.setSobrenome(null);
+        conferirMessagemErro(SOBRENOME_USUARIO_OBRIGATORIO, tentandoCriarUsuarioComDadosIncompletos(usuarioDTO));
     }
 
     @Test
     public void criarUsuarioSobrenomeEmptyDeveRetornarBadRequest() {
-        UsuarioDTO usuarioFaltandoNome = mockUsuarioDTO();
-        usuarioFaltandoNome.setSobrenome("");
-        tentandoCriarUsuarioComDadosIncompletos(usuarioFaltandoNome);
+        usuarioDTO.setSobrenome("");
+        conferirMessagemErro(SOBRENOME_USUARIO_OBRIGATORIO, tentandoCriarUsuarioComDadosIncompletos(usuarioDTO));
     }
 
     @Test
     public void criarUsuarioSenhaNullDeveRetornarBadRequest() {
-        UsuarioDTO usuarioFaltandoNome = mockUsuarioDTO();
-        usuarioFaltandoNome.setSenha(null);
-        tentandoCriarUsuarioComDadosIncompletos(usuarioFaltandoNome);
+        usuarioDTO.setSenha(null);
+        conferirMessagemErro(SENHA_USUARIO_OBRIGATORIO, tentandoCriarUsuarioComDadosIncompletos(usuarioDTO));
     }
 
     @Test
     public void criarUsuarioSenhaEmptyDeveRetornarBadRequest() {
-        UsuarioDTO usuarioFaltandoNome = mockUsuarioDTO();
-        usuarioFaltandoNome.setSenha("");
-        tentandoCriarUsuarioComDadosIncompletos(usuarioFaltandoNome);
+        usuarioDTO.setSenha("");
+        conferirMessagemErro(SENHA_USUARIO_OBRIGATORIO, tentandoCriarUsuarioComDadosIncompletos(usuarioDTO));
     }
 
     @Test
     public void criarUsuarioEmailNullDeveRetornarBadRequest() {
-        UsuarioDTO usuarioFaltandoNome = mockUsuarioDTO();
-        usuarioFaltandoNome.setEmail(null);
-        tentandoCriarUsuarioComDadosIncompletos(usuarioFaltandoNome);
+        usuarioDTO.setEmail(null);
+        conferirMessagemErro(EMAIL_USUARIO_OBRIGATORIO, tentandoCriarUsuarioComDadosIncompletos(usuarioDTO));
     }
 
     @Test
     public void criarUsuarioEmailEmptyDeveRetornarBadRequest() {
-        UsuarioDTO usuarioFaltandoNome = mockUsuarioDTO();
-        usuarioFaltandoNome.setEmail("");
-        tentandoCriarUsuarioComDadosIncompletos(usuarioFaltandoNome);
+        usuarioDTO.setEmail("");
+        conferirMessagemErro(EMAIL_USUARIO_OBRIGATORIO, tentandoCriarUsuarioComDadosIncompletos(usuarioDTO));
     }
 
     @Test
     public void criarUsuarioEmailJaExistebteDeveRetornarBadRequest() {
         BDDMockito.when(usuarioRepositorio.findByEmail(usuarioDTO.getEmail())).thenReturn(Optional.of(usuario));
-        tentandoCriarUsuarioComDadosIncompletos(usuarioDTO);
+        conferirMessagemErro(EMAIL_USUARIO_DUPLICADO, tentandoCriarUsuarioComDadosIncompletos(usuarioDTO));
     }
 
     @Test
     public void criarUsuarioUsuarioJaExistenteDeveRetornarBadRequest() {
         BDDMockito.when(usuarioRepositorio.findByUsuario(usuarioDTO.getUsuario())).thenReturn(Optional.of(usuario));
-        tentandoCriarUsuarioComDadosIncompletos(usuarioDTO);
+        conferirMessagemErro(USUARIO_USUARIO_DUPLICADO, tentandoCriarUsuarioComDadosIncompletos(usuarioDTO));
     }
 
-    private void tentandoCriarUsuarioComDadosIncompletos(UsuarioDTO usuarioFaltandoNome) {
-        ResponseEntity<Usuario> exchange = testRestTemplate.exchange("/novo-usuario", HttpMethod.POST, new HttpEntity<>(usuarioFaltandoNome), Usuario.class);
+    private ResponseEntity<Object> tentandoCriarUsuarioComDadosIncompletos(UsuarioDTO usuarioDTO) {
+        ResponseEntity<Object> exchange = testRestTemplate.exchange("/novo-usuario", HttpMethod.POST, new HttpEntity<>(usuarioDTO), Object.class);
         Assertions.assertThat(exchange.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        return exchange;
+    }
+
+    private String getMessageError(ResponseEntity<Object> responseEntity) {
+        return ((LinkedHashMap<String, String>) responseEntity.getBody()).get("message");
+    }
+
+    private void conferirMessagemErro(ErrorMessages errorMessages, ResponseEntity<Object> responseEntity) {
+        Assertions.assertThat(getMessageError(responseEntity)).isEqualTo(errorMessages.getMessage());
     }
 
 }

@@ -4,12 +4,13 @@ import br.com.welson.meucontrole.excecoes.NotFoundException;
 import br.com.welson.meucontrole.persistencia.modelos.Conta;
 import br.com.welson.meucontrole.persistencia.repositorios.ContaRepositorio;
 import br.com.welson.meucontrole.servicos.ContaService;
-import br.com.welson.meucontrole.servicos.CrudService;
 import br.com.welson.meucontrole.util.UsuarioUtil;
 import br.com.welson.meucontrole.validadores.ValidaCamposEntidade;
 import br.com.welson.meucontrole.validadores.ValidaConta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import static br.com.welson.meucontrole.util.ErrorMessages.CONTA_NAO_ENCONTRADA;
 
 @Service
 public class ContaServiceImpl implements ContaService {
@@ -24,7 +25,7 @@ public class ContaServiceImpl implements ContaService {
     @Override
     public Conta procurarPeloId(Long id) {
         return contaRepositorio.findByIdAndUsuario(id, UsuarioUtil.getUsuarioLogado())
-                .orElseThrow(() -> new NotFoundException("Conta não encontrada"));
+                .orElseThrow(() -> new NotFoundException(CONTA_NAO_ENCONTRADA));
     }
 
     @Override

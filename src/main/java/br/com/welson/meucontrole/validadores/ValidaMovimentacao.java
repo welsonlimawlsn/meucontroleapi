@@ -1,33 +1,33 @@
 package br.com.welson.meucontrole.validadores;
 
 import br.com.welson.meucontrole.excecoes.BadRequestException;
-import br.com.welson.meucontrole.persistencia.modelos.Categoria;
-import br.com.welson.meucontrole.persistencia.modelos.Entidade;
 import br.com.welson.meucontrole.persistencia.modelos.Movimentacao;
-import br.com.welson.meucontrole.servicos.CrudService;
+import br.com.welson.meucontrole.servicos.CategoriaService;
 
 import java.time.LocalDate;
 
-public class ValidaMovimentacao implements Validador {
+import static br.com.welson.meucontrole.util.ErrorMessages.*;
+
+public class ValidaMovimentacao implements Validador<Movimentacao> {
 
     private Movimentacao movimentacao;
-    private CrudService<Categoria> categoriaCrudService;
+    private CategoriaService categoriaService;
 
-    public ValidaMovimentacao(Movimentacao movimentacao, CrudService<Categoria> categoriaCrudService) {
+    public ValidaMovimentacao(Movimentacao movimentacao, CategoriaService categoriaService) {
         this.movimentacao = movimentacao;
-        this.categoriaCrudService = categoriaCrudService;
+        this.categoriaService = categoriaService;
     }
 
     @Override
     public void validar() {
         if (movimentacao.getValor() == null || movimentacao.getValor().doubleValue() == 0) {
-            throw new BadRequestException("O valor da movimentação precisa ser diferente de 0.");
+            throw new BadRequestException(VALOR_MOVIMENTACAO_DIFERENTE_ZERO);
         }
         if (movimentacao.getConta() == null) {
-            throw new BadRequestException("A movimentação precisa está associada a uma conta.");
+            throw new BadRequestException(MOVIMENTACAO_DEVE_ASSOCIADA_CONTA);
         }
         if (movimentacao.getDescricao() == null || movimentacao.getDescricao().isEmpty()) {
-            throw new BadRequestException("A movimentação precisa ter uma descrição.");
+            throw new BadRequestException(DESCRICAO_MOVIMENTACAO_OBRIGATORIA);
         }
         if (movimentacao.getData() == null) {
             movimentacao.setData(LocalDate.now());
@@ -35,14 +35,14 @@ public class ValidaMovimentacao implements Validador {
         if (movimentacao.getConsolidada() == null) {
             movimentacao.setConsolidada(false);
         }
-        if (movimentacao.getCategoria() == null || categoriaCrudService.procurarPeloId(movimentacao.getCategoria().getId()) == null) {
-            throw new BadRequestException("A movimentação precisa ter uma categoria.");
+        if (movimentacao.getCategoria() == null || categoriaService.procurarPeloId(movimentacao.getCategoria().getId()) == null) {
+            throw new BadRequestException(MOVIMENTACAO_DEVE_ASSOCIADA_CATEGORIA);
         }
         movimentacao.mudarSinalCasoNecessario();
     }
 
     @Override
-    public Entidade getEntidade() {
+    public Movimentacao getEntidade() {
         return movimentacao;
     }
 }

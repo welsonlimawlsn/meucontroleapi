@@ -1,21 +1,22 @@
 package br.com.welson.meucontrole.persistencia.modelos;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tbl_recuperacoes_senha")
 @Getter
 @Setter
-public class RecuperacaoSenha extends Entidade {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class RecuperacaoSenha implements IEntidade<String> {
 
     @Column(nullable = false)
+    @Id
+    @EqualsAndHashCode.Include
     private String hash;
 
     @Column(nullable = false)
@@ -37,4 +38,8 @@ public class RecuperacaoSenha extends Entidade {
         this.usuario = usuario;
     }
 
+    @Override
+    public String getIdentificador() {
+        return hash;
+    }
 }

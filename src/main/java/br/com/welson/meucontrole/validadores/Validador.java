@@ -1,10 +1,8 @@
 package br.com.welson.meucontrole.validadores;
 
-import br.com.welson.meucontrole.persistencia.modelos.Entidade;
-
-public interface Validador {
+public interface Validador<T> {
 
     void validar();
 
-    Entidade getEntidade();
+    T getEntidade();
 }

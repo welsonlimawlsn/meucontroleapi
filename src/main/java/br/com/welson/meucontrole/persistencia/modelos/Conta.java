@@ -1,17 +1,28 @@
 package br.com.welson.meucontrole.persistencia.modelos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
+import static javax.persistence.GenerationType.AUTO;
+
 @Entity
 @Table(name = "tbl_contas")
 @Getter
 @Setter
-public class Conta extends Entidade {
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class Conta implements IEntidade<Long> {
+
+    @Id
+    @GeneratedValue(strategy = AUTO)
+    @EqualsAndHashCode.Include
+    private Long id;
 
     @JsonIgnore
     @ManyToOne(optional = false)
@@ -32,8 +43,7 @@ public class Conta extends Entidade {
     }
 
     public Conta(Usuario usuario, String nome) {
-        this.usuario = usuario;
-        this.nome = nome;
+        this(null, usuario, nome, null, null);
     }
 
     public Conta(String nome) {
@@ -44,4 +54,8 @@ public class Conta extends Entidade {
         this.id = id;
     }
 
+    @Override
+    public Long getIdentificador() {
+        return id;
+    }
 }

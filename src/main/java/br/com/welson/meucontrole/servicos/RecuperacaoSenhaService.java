@@ -3,7 +3,7 @@ package br.com.welson.meucontrole.servicos;
 import br.com.welson.meucontrole.persistencia.modelos.NovaSenha;
 import br.com.welson.meucontrole.persistencia.modelos.RecuperacaoSenha;
 
-public interface RecuperacaoSenhaService extends CrudService<RecuperacaoSenha> {
+public interface RecuperacaoSenhaService extends CrudService<RecuperacaoSenha, String> {
 
     RecuperacaoSenha getRecuperacaoSenhaSeExistir(String hash);
 

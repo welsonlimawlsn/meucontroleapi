@@ -1,11 +1,12 @@
 package br.com.welson.meucontrole.validadores;
 
 import br.com.welson.meucontrole.excecoes.BadRequestException;
-import br.com.welson.meucontrole.persistencia.modelos.Entidade;
 import br.com.welson.meucontrole.persistencia.modelos.Usuario;
 import br.com.welson.meucontrole.persistencia.repositorios.UsuarioRepositorio;
 
-public class ValidaUsuario implements Validador {
+import static br.com.welson.meucontrole.util.ErrorMessages.*;
+
+public class ValidaUsuario implements Validador<Usuario> {
 
     private Usuario usuario;
     private boolean verificarUsuarioEmail;
@@ -25,20 +26,22 @@ public class ValidaUsuario implements Validador {
     @Override
     public void validar() {
         if (usuario.getUsuario() == null || usuario.getUsuario().isEmpty()) {
-            throw new BadRequestException("Um nome de usuario é obrigatório.");
+            throw new BadRequestException(USUARIO_USUARIO_OBRIGATORIO);
         }
         if (usuario.getNome() == null || usuario.getNome().isEmpty()) {
-            throw new BadRequestException("Um nome é obrigatório.");
+            throw new BadRequestException(NOME_USUARIO_OBRIGATORIO);
         }
         if (usuario.getSobrenome() == null || usuario.getSobrenome().isEmpty()) {
-            throw new BadRequestException("Um sobrenome é obrigatório.");
+            throw new BadRequestException(SOBRENOME_USUARIO_OBRIGATORIO);
         }
         if (usuario.getSenha() == null || usuario.getSenha().isEmpty()) {
-            throw new BadRequestException("Você deve criar uma senha.");
+            throw new BadRequestException(SENHA_USUARIO_OBRIGATORIO);
         }
         if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) {
-            throw new BadRequestException("Você deve informar o seu e-mail.");
+            throw new BadRequestException(EMAIL_USUARIO_OBRIGATORIO);
         }
+
+        // Verificar veracidade do email informado pelo usuario
 
         if (verificarUsuarioEmail) {
             verificarSeEmailEUsuarioNaoExistem();
@@ -46,16 +49,16 @@ public class ValidaUsuario implements Validador {
     }
 
     @Override
-    public Entidade getEntidade() {
+    public Usuario getEntidade() {
         return usuario;
     }
 
     private void verificarSeEmailEUsuarioNaoExistem() {
         if (usuarioRepositorio.findByUsuario(usuario.getUsuario()).isPresent()) {
-            throw new BadRequestException("Este nome usuario já existe. Por favor, escolha outro.");
+            throw new BadRequestException(USUARIO_USUARIO_DUPLICADO);
         }
         if (usuarioRepositorio.findByEmail(usuario.getEmail()).isPresent()) {
-            throw new BadRequestException("Esse email já está sendo utilizado. Por favor, faça o login.");
+            throw new BadRequestException(EMAIL_USUARIO_DUPLICADO);
         }
     }
 }

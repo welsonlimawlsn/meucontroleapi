@@ -19,6 +19,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
 import static br.com.welson.meucontrole.util.ConstantesDeConfiguracao.ENDERECO_FRONT_END;
+import static br.com.welson.meucontrole.util.ErrorMessages.LINK_INVALIDO;
 
 @Service
 public class RecuperacaoSenhaServiceImpl implements RecuperacaoSenhaService {
@@ -36,9 +37,9 @@ public class RecuperacaoSenhaServiceImpl implements RecuperacaoSenhaService {
 
     @Override
     public RecuperacaoSenha getRecuperacaoSenhaSeExistir(String hash) {
-        RecuperacaoSenha recuperacaoSenha = recuperacaoSenhaRepositorio.findByHash(hash).orElseThrow(() -> new NotFoundException("Link invalido!"));
+        RecuperacaoSenha recuperacaoSenha = recuperacaoSenhaRepositorio.findByHash(hash).orElseThrow(() -> new NotFoundException(LINK_INVALIDO));
         if (verificarValidade(recuperacaoSenha) || recuperacaoSenha.getUsado()) {
-            throw new NotFoundException("Link Invalido");
+            throw new NotFoundException(LINK_INVALIDO);
         }
         return recuperacaoSenha;
     }
@@ -70,7 +71,7 @@ public class RecuperacaoSenhaServiceImpl implements RecuperacaoSenhaService {
     }
 
     @Override
-    public RecuperacaoSenha procurarPeloId(Long id) {
+    public RecuperacaoSenha procurarPeloId(String id) {
         return null;
     }
 

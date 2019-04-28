@@ -2,7 +2,7 @@ package br.com.welson.meucontrole.servicos.implemetacoes;
 
 import br.com.welson.meucontrole.persistencia.modelos.MovimentacaoParcelada;
 import br.com.welson.meucontrole.persistencia.repositorios.MovimentacaoParceladaRepositorio;
-import br.com.welson.meucontrole.servicos.CrudService;
+import br.com.welson.meucontrole.servicos.MovimentacaoParceladaService;
 import br.com.welson.meucontrole.util.UsuarioUtil;
 import br.com.welson.meucontrole.validadores.ValidaCamposEntidade;
 import br.com.welson.meucontrole.validadores.ValidaMovimentacaoParcelada;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MovimentacaoParceladaServiceImpl implements CrudService<MovimentacaoParcelada> {
+public class MovimentacaoParceladaServiceImpl implements MovimentacaoParceladaService {
 
     private final MovimentacaoParceladaRepositorio movimentacaoParceladaRepositorio;
 

@@ -5,12 +5,14 @@ import br.com.welson.meucontrole.persistencia.modelos.Conta;
 import br.com.welson.meucontrole.persistencia.modelos.Usuario;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import static br.com.welson.meucontrole.util.ErrorMessages.CONTA_NAO_ENCONTRADA;
+
 public abstract class UsuarioUtil {
 
     public static void verificarSeContaPerteceAoUsuarioLogado(Conta conta) {
         Usuario usuarioLogado = getUsuarioLogado();
         if (!conta.getUsuario().equals(usuarioLogado)) {
-            throw new BadRequestException("Conta invalida");
+            throw new BadRequestException(CONTA_NAO_ENCONTRADA);
         }
     }
 

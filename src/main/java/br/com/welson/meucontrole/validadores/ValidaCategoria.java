@@ -2,9 +2,10 @@ package br.com.welson.meucontrole.validadores;
 
 import br.com.welson.meucontrole.excecoes.BadRequestException;
 import br.com.welson.meucontrole.persistencia.modelos.Categoria;
-import br.com.welson.meucontrole.persistencia.modelos.Entidade;
 
-public class ValidaCategoria implements Validador {
+import static br.com.welson.meucontrole.util.ErrorMessages.NOME_CATEGORIA_OBRIGATORIO;
+
+public class ValidaCategoria implements Validador<Categoria> {
 
     private Categoria categoria;
 
@@ -15,12 +16,12 @@ public class ValidaCategoria implements Validador {
     @Override
     public void validar() {
         if (categoria.getNome() == null || categoria.getNome().isEmpty()) {
-            throw new BadRequestException("Você deve dar um nome a categoria!");
+            throw new BadRequestException(NOME_CATEGORIA_OBRIGATORIO);
         }
     }
 
     @Override
-    public Entidade getEntidade() {
+    public Categoria getEntidade() {
         return categoria;
     }
 }

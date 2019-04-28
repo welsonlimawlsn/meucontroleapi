@@ -6,13 +6,18 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.ZonedDateTime;
 import java.util.Date;
 
 import static br.com.welson.meucontrole.seguranca.filtros.Constantes.CHAVE;
 import static br.com.welson.meucontrole.seguranca.filtros.Constantes.PREFIXO_TOKEN;
+import static br.com.welson.meucontrole.util.ErrorMessages.TOKEN_EXPIRADO;
 
+@Getter
+@Setter
 public class Token {
 
     private String token;
@@ -41,31 +46,7 @@ public class Token {
             Claims body = Jwts.parser().setSigningKey(CHAVE).parseClaimsJws(token.replace(PREFIXO_TOKEN, "")).getBody();
             return new Token(token, body.getSubject());
         } catch (ExpiredJwtException e) {
-            throw new ForbiddenException("Seu token expirou! Faça o login novamente.");
+            throw new ForbiddenException(TOKEN_EXPIRADO);
         }
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getExpiracao() {
-        return expiracao;
-    }
-
-    public void setExpiracao(String expiracao) {
-        this.expiracao = expiracao;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
     }
 }

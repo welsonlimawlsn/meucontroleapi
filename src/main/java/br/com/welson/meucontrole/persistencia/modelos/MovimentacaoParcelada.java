@@ -1,6 +1,7 @@
 package br.com.welson.meucontrole.persistencia.modelos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,11 +10,19 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import static javax.persistence.GenerationType.AUTO;
+
 @Entity
 @Table(name = "tbl_movimentacoes_parceladas")
 @Getter
 @Setter
-public class MovimentacaoParcelada extends Entidade {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class MovimentacaoParcelada implements IEntidade<Long> {
+
+    @Id
+    @GeneratedValue(strategy = AUTO)
+    @EqualsAndHashCode.Include
+    private Long id;
 
     @Column(nullable = false)
     private String descricao;
@@ -47,5 +56,10 @@ public class MovimentacaoParcelada extends Entidade {
         this.categoria = categoria;
         this.quantidadeParcelas = quantidadeParcelas;
         this.movimentacoes = movimentacoes;
+    }
+
+    @Override
+    public Long getIdentificador() {
+        return id;
     }
 }

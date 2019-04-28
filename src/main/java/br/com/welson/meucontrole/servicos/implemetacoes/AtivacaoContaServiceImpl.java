@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
+import static br.com.welson.meucontrole.util.ErrorMessages.LINK_ATIVACAO_INVALIDO;
+
 @Service
 public class AtivacaoContaServiceImpl implements AtivacaoContaService {
 
@@ -36,11 +38,11 @@ public class AtivacaoContaServiceImpl implements AtivacaoContaService {
 
     @Override
     public AtivacaoConta pegarAtivacaoConta(String hash) {
-        return ativacaoContaRepositorio.findByHash(hash).orElseThrow(() -> new BadRequestException("Link de ativação invalido"));
+        return ativacaoContaRepositorio.findByHash(hash).orElseThrow(() -> new BadRequestException(LINK_ATIVACAO_INVALIDO));
     }
 
     @Override
-    public AtivacaoConta procurarPeloId(Long id) {
+    public AtivacaoConta procurarPeloId(String id) {
         return null;
     }
 

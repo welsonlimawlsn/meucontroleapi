@@ -2,13 +2,12 @@ package br.com.welson.meucontrole.persistencia.modelos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
@@ -18,7 +17,9 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 @Table(name = "tbl_usuarios")
 @Getter
 @Setter
-public class Usuario extends Entidade {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@AllArgsConstructor
+public class Usuario implements IEntidade<String> {
 
     @Column(nullable = false, length = 20)
     private String nome;
@@ -30,6 +31,8 @@ public class Usuario extends Entidade {
     private String email;
 
     @Column(nullable = false, unique = true, length = 20)
+    @Id
+    @EqualsAndHashCode.Include
     private String usuario;
 
     @JsonProperty(access = WRITE_ONLY)
@@ -52,23 +55,15 @@ public class Usuario extends Entidade {
     }
 
     public Usuario(Usuario usuario) {
-        this(usuario.id, usuario.nome, usuario.sobrenome, usuario.email, usuario.usuario, usuario.senha, usuario.administrador, usuario.ativa, usuario.contas);
+        this(usuario.nome, usuario.sobrenome, usuario.email, usuario.usuario, usuario.senha, usuario.administrador, usuario.ativa, usuario.contas);
     }
 
     public Usuario(String nome, String sobrenome, String email, String usuario, String senha) {
-        this(null, nome, sobrenome, email, usuario, senha, null, null, null);
+        this(nome, sobrenome, email, usuario, senha, null, null, null);
     }
 
-    public Usuario(Long id, String nome, String sobrenome, String email, String usuario, String senha, Boolean administrador, Boolean ativa, List<Conta> contas) {
-        this.id = id;
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.email = email;
-        this.usuario = usuario;
-        this.senha = senha;
-        this.administrador = administrador;
-        this.ativa = ativa;
-        this.contas = contas;
+    @Override
+    public String getIdentificador() {
+        return usuario;
     }
-
 }

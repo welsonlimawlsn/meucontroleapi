@@ -2,10 +2,11 @@ package br.com.welson.meucontrole.validadores;
 
 import br.com.welson.meucontrole.excecoes.BadRequestException;
 import br.com.welson.meucontrole.persistencia.modelos.Conta;
-import br.com.welson.meucontrole.persistencia.modelos.Entidade;
 import br.com.welson.meucontrole.util.UsuarioUtil;
 
-public class ValidaConta implements Validador {
+import static br.com.welson.meucontrole.util.ErrorMessages.NOME_CONTA_OBRIGATORIO;
+
+public class ValidaConta implements Validador<Conta> {
 
     private Conta conta;
 
@@ -19,12 +20,12 @@ public class ValidaConta implements Validador {
             conta.setUsuario(UsuarioUtil.getUsuarioLogado());
         }
         if (conta.getNome() == null) {
-            throw new BadRequestException("Um nome para a conta é obrigatório");
+            throw new BadRequestException(NOME_CONTA_OBRIGATORIO);
         }
     }
 
     @Override
-    public Entidade getEntidade() {
+    public Conta getEntidade() {
         return conta;
     }
 }

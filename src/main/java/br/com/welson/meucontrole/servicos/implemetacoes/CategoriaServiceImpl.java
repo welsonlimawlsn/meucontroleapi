@@ -4,11 +4,12 @@ import br.com.welson.meucontrole.excecoes.NotFoundException;
 import br.com.welson.meucontrole.persistencia.modelos.Categoria;
 import br.com.welson.meucontrole.persistencia.repositorios.CategoriaRepositorio;
 import br.com.welson.meucontrole.servicos.CategoriaService;
-import br.com.welson.meucontrole.servicos.CrudService;
 import br.com.welson.meucontrole.validadores.ValidaCamposEntidade;
 import br.com.welson.meucontrole.validadores.ValidaCategoria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import static br.com.welson.meucontrole.util.ErrorMessages.CATEGORIA_NAO_EXISTE;
 
 @Service
 public class CategoriaServiceImpl implements CategoriaService {
@@ -23,7 +24,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     @Override
     public Categoria procurarPeloId(Long id) {
         if (id != null) {
-            return categoriaRepositorio.findById(id).orElseThrow(() -> new NotFoundException("Essa categoria não existe"));
+            return categoriaRepositorio.findById(id).orElseThrow(() -> new NotFoundException(CATEGORIA_NAO_EXISTE));
         }
         return null;
     }

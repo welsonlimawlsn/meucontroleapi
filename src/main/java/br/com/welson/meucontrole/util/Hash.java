@@ -6,6 +6,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import static br.com.welson.meucontrole.util.ErrorMessages.ERRO_GERAR_HASH;
+
 public abstract class Hash {
 
     public static String encode(String value) {
@@ -18,7 +20,7 @@ public abstract class Hash {
             }
             return hex.toString();
         } catch (NoSuchAlgorithmException e) {
-            throw new InternalServerErrorException("Erro ao gerar o hash");
+            throw new InternalServerErrorException(ERRO_GERAR_HASH);
         }
     }
 }

@@ -1,10 +1,11 @@
 package br.com.welson.meucontrole.persistencia.modelos;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -12,9 +13,11 @@ import javax.persistence.Table;
 @Table(name = "tbl_ativacoes_contas")
 @Getter
 @Setter
-public class AtivacaoConta extends Entidade {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class AtivacaoConta implements IEntidade<String> {
 
-    @Column(nullable = false)
+    @Id
+    @EqualsAndHashCode.Include
     private String hash;
 
     @OneToOne(optional = false)
@@ -28,4 +31,8 @@ public class AtivacaoConta extends Entidade {
         this.usuario = usuario;
     }
 
+    @Override
+    public String getIdentificador() {
+        return hash;
+    }
 }

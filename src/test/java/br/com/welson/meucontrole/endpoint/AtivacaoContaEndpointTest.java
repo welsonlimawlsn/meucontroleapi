@@ -46,7 +46,7 @@ public class AtivacaoContaEndpointTest {
     @Before
     public void setup() {
         BDDMockito.when(ativacaoContaRepositorio.findByHash(ativacaoConta.getHash())).thenReturn(Optional.of(ativacaoConta));
-        BDDMockito.when(usuarioRepositorio.findById(ativacaoConta.getUsuario().getId())).thenReturn(Optional.of(ativacaoConta.getUsuario()));
+        BDDMockito.when(usuarioRepositorio.findById(ativacaoConta.getUsuario().getUsuario())).thenReturn(Optional.of(ativacaoConta.getUsuario()));
     }
 
     @Test

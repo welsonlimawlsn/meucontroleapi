@@ -1,11 +1,12 @@
 package br.com.welson.meucontrole.servicos.implemetacoes;
 
-import br.com.welson.meucontrole.persistencia.modelos.Categoria;
 import br.com.welson.meucontrole.persistencia.modelos.Conta;
 import br.com.welson.meucontrole.persistencia.modelos.Movimentacao;
 import br.com.welson.meucontrole.persistencia.modelos.MovimentacaoParcelada;
 import br.com.welson.meucontrole.persistencia.repositorios.MovimentacaoRepositorio;
-import br.com.welson.meucontrole.servicos.CrudService;
+import br.com.welson.meucontrole.servicos.CategoriaService;
+import br.com.welson.meucontrole.servicos.ContaService;
+import br.com.welson.meucontrole.servicos.MovimentacaoParceladaService;
 import br.com.welson.meucontrole.servicos.MovimentacaoService;
 import br.com.welson.meucontrole.util.MovimentacaoIntanciavel;
 import br.com.welson.meucontrole.util.UsuarioUtil;
@@ -21,31 +22,31 @@ import java.util.ArrayList;
 public class MovimentacaoServiceImpl implements MovimentacaoService {
 
     private final MovimentacaoRepositorio movimentacaoRepositorio;
-    private final CrudService<Conta> contaCrudService;
-    private final CrudService<MovimentacaoParcelada> movimentacaoParceladaCrudService;
-    private final CrudService<Categoria> categoriaCrudService;
+    private final ContaService contaService;
+    private final MovimentacaoParceladaService movimentacaoParceladaService;
+    private final CategoriaService categoriaService;
 
     @Autowired
-    public MovimentacaoServiceImpl(MovimentacaoRepositorio movimentacaoRepositorio, CrudService<Conta> contaCrudService, CrudService<MovimentacaoParcelada> movimentacaoParceladaCrudService, CrudService<Categoria> categoriaCrudService) {
+    public MovimentacaoServiceImpl(MovimentacaoRepositorio movimentacaoRepositorio, ContaService contaService, MovimentacaoParceladaService movimentacaoParceladaService, CategoriaService categoriaService) {
         this.movimentacaoRepositorio = movimentacaoRepositorio;
-        this.contaCrudService = contaCrudService;
-        this.movimentacaoParceladaCrudService = movimentacaoParceladaCrudService;
-        this.categoriaCrudService = categoriaCrudService;
+        this.contaService = contaService;
+        this.movimentacaoParceladaService = movimentacaoParceladaService;
+        this.categoriaService = categoriaService;
     }
 
     @Override
     public Movimentacao criar(Movimentacao movimentacao, Long idConta) {
-        Conta conta = contaCrudService.procurarPeloId(idConta);
+        Conta conta = contaService.procurarPeloId(idConta);
         movimentacao.setConta(conta);
         return criar(movimentacao);
     }
 
     @Override
     public MovimentacaoParcelada criar(MovimentacaoParcelada movimentacaoParcelada, Long idConta, MovimentacaoIntanciavel movimentacaoIntanciavel) {
-        Conta conta = contaCrudService.procurarPeloId(idConta);
+        Conta conta = contaService.procurarPeloId(idConta);
         movimentacaoParcelada.setConta(conta);
         movimentacaoParcelada.setMovimentacoes(new ArrayList<>());
-        movimentacaoParcelada = movimentacaoParceladaCrudService.criar(movimentacaoParcelada);
+        movimentacaoParcelada = movimentacaoParceladaService.criar(movimentacaoParcelada);
         LocalDate data = movimentacaoParcelada.getDataInicial();
         for (int i = 0; i < movimentacaoParcelada.getQuantidadeParcelas(); i++) {
             Movimentacao movimentacao = movimentacaoIntanciavel.getInstance(movimentacaoParcelada, data);
@@ -63,7 +64,7 @@ public class MovimentacaoServiceImpl implements MovimentacaoService {
     @Override
     public Movimentacao criar(Movimentacao entidade) {
         UsuarioUtil.verificarSeContaPerteceAoUsuarioLogado(entidade.getConta());
-        ValidaCamposEntidade.validar(new ValidaMovimentacao(entidade, categoriaCrudService), true);
+        ValidaCamposEntidade.validar(new ValidaMovimentacao(entidade, categoriaService), true);
         return movimentacaoRepositorio.save(entidade);
     }
 

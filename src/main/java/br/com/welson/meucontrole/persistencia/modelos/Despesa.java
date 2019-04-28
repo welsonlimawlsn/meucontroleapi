@@ -16,14 +16,6 @@ public class Despesa extends Movimentacao {
         super(descricao, valor, data, conta, categoria, consolidada, movimentacaoParcelada);
     }
 
-    public Despesa(String descricao, BigDecimal valor, LocalDate data, Conta conta, Categoria categoria, Boolean consolidada) {
-        super(descricao, valor, data, conta, categoria, consolidada);
-    }
-
-    public Despesa(String descricao, BigDecimal valor, Conta conta, Categoria categoria, Boolean consolidada) {
-        super(descricao, valor, conta, categoria, consolidada);
-    }
-
     public Despesa(String descricao, BigDecimal valor, LocalDate data, Categoria categoria, Boolean consolidada) {
         super(descricao, valor, data, categoria, consolidada);
     }

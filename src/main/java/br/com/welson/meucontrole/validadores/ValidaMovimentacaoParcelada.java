@@ -1,10 +1,11 @@
 package br.com.welson.meucontrole.validadores;
 
 import br.com.welson.meucontrole.excecoes.BadRequestException;
-import br.com.welson.meucontrole.persistencia.modelos.Entidade;
 import br.com.welson.meucontrole.persistencia.modelos.MovimentacaoParcelada;
 
-public class ValidaMovimentacaoParcelada implements Validador {
+import static br.com.welson.meucontrole.util.ErrorMessages.*;
+
+public class ValidaMovimentacaoParcelada implements Validador<MovimentacaoParcelada> {
 
     private MovimentacaoParcelada movimentacaoParcelada;
 
@@ -15,24 +16,24 @@ public class ValidaMovimentacaoParcelada implements Validador {
     @Override
     public void validar() {
         if (movimentacaoParcelada.getValor() == null || movimentacaoParcelada.getValor().doubleValue() == 0) {
-            throw new BadRequestException("O valor da movimentação precisa ser diferente de 0.");
+            throw new BadRequestException(VALOR_MOVIMENTACAO_DIFERENTE_ZERO);
         }
         if (movimentacaoParcelada.getConta() == null) {
-            throw new BadRequestException("A movimentação precisa está associada a uma conta.");
+            throw new BadRequestException(MOVIMENTACAO_DEVE_ASSOCIADA_CONTA);
         }
         if (movimentacaoParcelada.getDescricao() == null || movimentacaoParcelada.getDescricao().isEmpty()) {
-            throw new BadRequestException("A movimentação precisa ter uma descrição.");
+            throw new BadRequestException(DESCRICAO_MOVIMENTACAO_OBRIGATORIA);
         }
         if (movimentacaoParcelada.getDataInicial() == null) {
-            throw new BadRequestException("A movimentação precisa ter uma data inicial.");
+            throw new BadRequestException(DATA_INICIAL_MOVIMENTACAO_OBRIGATORIA);
         }
         if (movimentacaoParcelada.getQuantidadeParcelas() == null || movimentacaoParcelada.getQuantidadeParcelas() <= 1) {
-            throw new BadRequestException("A movimentação precisa ter mais de uma parcela");
+            throw new BadRequestException(MOVIMENTACAO_PRECISA_MAIS_DE_UMA_PARCELA);
         }
     }
 
     @Override
-    public Entidade getEntidade() {
+    public MovimentacaoParcelada getEntidade() {
         return movimentacaoParcelada;
     }
 }

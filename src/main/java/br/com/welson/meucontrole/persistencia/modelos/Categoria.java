@@ -1,19 +1,25 @@
 package br.com.welson.meucontrole.persistencia.modelos;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
+
+import static javax.persistence.GenerationType.AUTO;
 
 @Entity
 @Table(name = "tbl_categorias")
 @Getter
 @Setter
-public class Categoria extends Entidade {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class Categoria implements IEntidade<Long> {
+
+    @Id
+    @GeneratedValue(strategy = AUTO)
+    @EqualsAndHashCode.Include
+    private Long id;
 
     @Column(nullable = false, unique = true)
     private String nome;
@@ -28,4 +34,8 @@ public class Categoria extends Entidade {
         this.nome = nome;
     }
 
+    @Override
+    public Long getIdentificador() {
+        return id;
+    }
 }

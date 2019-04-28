@@ -1,23 +1,28 @@
 package br.com.welson.meucontrole.persistencia.modelos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import static javax.persistence.GenerationType.AUTO;
 import static javax.persistence.InheritanceType.TABLE_PER_CLASS;
 
 @Entity
 @Inheritance(strategy = TABLE_PER_CLASS)
 @Getter
 @Setter
-public abstract class Movimentacao extends Entidade {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public abstract class Movimentacao implements IEntidade<Long> {
+
+    @Id
+    @GeneratedValue(strategy = AUTO)
+    @EqualsAndHashCode.Include
+    private Long id;
 
     @Column(nullable = false)
     private String descricao;
@@ -74,4 +79,8 @@ public abstract class Movimentacao extends Entidade {
         valor = valor.negate();
     }
 
+    @Override
+    public Long getIdentificador() {
+        return id;
+    }
 }
