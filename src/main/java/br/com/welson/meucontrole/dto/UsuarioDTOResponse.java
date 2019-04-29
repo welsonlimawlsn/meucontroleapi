@@ -10,17 +10,15 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsuarioDTO implements DTO<Usuario> {
+public class UsuarioDTOResponse {
 
     private String nome;
     private String sobrenome;
     private String email;
     private String usuario;
-    private String senha;
+    private Boolean administrador;
 
-    @Override
-    public Usuario convertToObject() {
-        return new Usuario(nome, sobrenome, email, usuario, senha);
+    public static UsuarioDTOResponse convertToDTO(Usuario usuario) {
+        return new UsuarioDTOResponse(usuario.getNome(), usuario.getSobrenome(), usuario.getEmail(), usuario.getUsuario(), usuario.getAdministrador());
     }
-
 }

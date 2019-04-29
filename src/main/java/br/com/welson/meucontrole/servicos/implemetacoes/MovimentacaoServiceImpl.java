@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MovimentacaoServiceImpl implements MovimentacaoService {
@@ -54,6 +55,11 @@ public class MovimentacaoServiceImpl implements MovimentacaoService {
             data = data.plusMonths(1);
         }
         return movimentacaoParcelada;
+    }
+
+    @Override
+    public List<Movimentacao> getMovimentacoesEntre(LocalDate inicio, LocalDate fim) {
+        return movimentacaoRepositorio.findByConta_UsuarioAndDataBetween(UsuarioUtil.getUsuarioLogado(), inicio, fim);
     }
 
     @Override

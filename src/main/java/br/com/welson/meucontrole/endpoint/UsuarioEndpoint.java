@@ -1,7 +1,7 @@
 package br.com.welson.meucontrole.endpoint;
 
 import br.com.welson.meucontrole.dto.UsuarioDTO;
-import br.com.welson.meucontrole.persistencia.modelos.Usuario;
+import br.com.welson.meucontrole.dto.UsuarioDTOResponse;
 import br.com.welson.meucontrole.servicos.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class UsuarioEndpoint {
 
     @Transactional
     @PostMapping("/novo-usuario")
-    public ResponseEntity<Usuario> novo(@RequestBody UsuarioDTO usuario) {
-        return new ResponseEntity<>(usuarioService.criar(usuario.convertToObject()), HttpStatus.CREATED);
+    public ResponseEntity<UsuarioDTOResponse> novo(@RequestBody UsuarioDTO usuario) {
+        return new ResponseEntity<>(UsuarioDTOResponse.convertToDTO(usuarioService.criar(usuario.convertToObject())), HttpStatus.CREATED);
     }
 }
