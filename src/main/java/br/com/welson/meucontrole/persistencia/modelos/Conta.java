@@ -32,11 +32,11 @@ public class Conta implements IEntidade<Long> {
     private String nome;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "conta")
+    @OneToMany(mappedBy = "conta", fetch = FetchType.EAGER)
     private List<Movimentacao> movimentacoes;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "conta")
+    @OneToMany(mappedBy = "conta", fetch = FetchType.EAGER)
     private List<MovimentacaoParcelada> movimentacaoParceladas;
 
     public Conta() {

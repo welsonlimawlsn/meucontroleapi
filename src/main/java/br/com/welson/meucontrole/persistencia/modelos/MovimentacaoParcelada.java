@@ -43,7 +43,7 @@ public class MovimentacaoParcelada implements IEntidade<Long> {
     @Column(nullable = false)
     private Integer quantidadeParcelas;
 
-    @OneToMany(mappedBy = "movimentacaoParcelada")
+    @OneToMany(mappedBy = "movimentacaoParcelada", fetch = FetchType.EAGER)
     private List<Movimentacao> movimentacoes;
 
     public MovimentacaoParcelada() {

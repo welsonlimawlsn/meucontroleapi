@@ -48,7 +48,7 @@ public class Usuario implements IEntidade<String> {
     private Boolean ativa;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     private List<Conta> contas;
 
     public Usuario() {

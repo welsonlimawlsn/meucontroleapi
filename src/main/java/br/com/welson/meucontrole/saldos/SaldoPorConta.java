@@ -25,14 +25,9 @@ public class SaldoPorConta implements FormaSaldo {
         List<Conta> contas = UsuarioUtil.getUsuarioLogado().getContas();
         if (contas.contains(conta)) {
             Conta conta = contas.get(contas.indexOf(this.conta));
-            return MovimentacaoUtil.calculaSaldoMovimentacoes(conta.getMovimentacoes(), getRegraDataMovimentacao())
-                    .add(MovimentacaoUtil.calculaSaldoMovimentacoesParceladas(conta.getMovimentacaoParceladas(), getRegraDataMovimentacaoParcelada(), getRegraDataMovimentacao()));
+            return MovimentacaoUtil.calculaSaldoMovimentacoes(conta.getMovimentacoes(), getRegraDataMovimentacao());
         }
         return null;
-    }
-
-    private Predicate<MovimentacaoParcelada> getRegraDataMovimentacaoParcelada() {
-        return movimentacaoParcelada -> movimentacaoParcelada.getDataInicial().isBefore(LocalDate.now()) || movimentacaoParcelada.getDataInicial().isEqual(LocalDate.now());
     }
 
     private Predicate<Movimentacao> getRegraDataMovimentacao() {
