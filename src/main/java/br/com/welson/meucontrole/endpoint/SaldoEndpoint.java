@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
@@ -27,8 +28,8 @@ public class SaldoEndpoint {
 
     @GetMapping("usuario/conta/{idConta}/saldo")
     @Transactional
-    public ResponseEntity<Saldo> saldoMesAtualContaEspecifica(@PathVariable Long idConta) {
-        return new ResponseEntity<>(saldoService.getSaldo(new SaldoPorConta(new Conta(idConta))), OK);
+    public ResponseEntity<Saldo> saldoMesAtualContaEspecifica(@PathVariable Long idConta, @RequestParam(value = "fimMes", required = false) boolean fimDeMes) {
+        return new ResponseEntity<>(saldoService.getSaldo(new SaldoPorConta(new Conta(idConta), fimDeMes)), OK);
     }
 
     @GetMapping("usuario/conta/{idConta}/saldo/{dataLimite}")
