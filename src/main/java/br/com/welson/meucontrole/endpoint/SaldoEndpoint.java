@@ -34,8 +34,8 @@ public class SaldoEndpoint {
 
     @GetMapping("usuario/conta/{idConta}/saldo/{dataLimite}")
     @Transactional
-    public ResponseEntity<String> saldoMesAtualContaEspecifica(@PathVariable Long idConta, @PathVariable LocalDate dataLimite) {
-        return new ResponseEntity<>("", OK);
+    public ResponseEntity<Saldo> saldoDataLimiteContaEspecifica(@PathVariable Long idConta, @PathVariable LocalDate dataLimite) {
+        return new ResponseEntity<>(saldoService.getSaldo(new SaldoPorConta(new Conta(idConta), dataLimite)), OK);
     }
 
     @GetMapping("usuario/saldo")
