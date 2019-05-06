@@ -27,13 +27,13 @@ public class ReceitaEndpoint {
 
     @Transactional
     @PostMapping("usuario/conta/{idConta}/receita")
-    public ResponseEntity<Movimentacao> nova(@RequestBody ReceitaDTO receita, @PathVariable Long idConta) {
+    public ResponseEntity<Movimentacao> nova(@RequestBody ReceitaDTO receita, @PathVariable String idConta) {
         return new ResponseEntity<>(movimentacaoService.criar(receita.convertToObject(), idConta), HttpStatus.CREATED);
     }
 
     @Transactional
     @PostMapping("usuario/conta/{idConta}/receita-parcelada")
-    public ResponseEntity<MovimentacaoParcelada> nova(@RequestBody MovimentacaoParceladaDTO movimentacaoParcelada, @PathVariable Long idConta) {
+    public ResponseEntity<MovimentacaoParcelada> nova(@RequestBody MovimentacaoParceladaDTO movimentacaoParcelada, @PathVariable String idConta) {
         return new ResponseEntity<>(movimentacaoService.criar(movimentacaoParcelada.convertToObject(), idConta, new InstanciaReceita()), HttpStatus.CREATED);
     }
 }

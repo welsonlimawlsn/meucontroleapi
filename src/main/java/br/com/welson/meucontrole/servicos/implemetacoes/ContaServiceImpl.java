@@ -23,7 +23,7 @@ public class ContaServiceImpl implements ContaService {
     }
 
     @Override
-    public Conta procurarPeloId(Long id) {
+    public Conta procurarPeloId(String id) {
         return contaRepositorio.findByIdAndUsuario(id, UsuarioUtil.getUsuarioLogado())
                 .orElseThrow(() -> new NotFoundException(CONTA_NAO_ENCONTRADA));
     }

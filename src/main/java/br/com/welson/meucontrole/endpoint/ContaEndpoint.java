@@ -27,7 +27,7 @@ public class ContaEndpoint {
 
     @Transactional
     @GetMapping("usuario/conta/{id}")
-    public ResponseEntity<Conta> getPorId(@PathVariable Long id) {
+    public ResponseEntity<Conta> getPorId(@PathVariable String id) {
         return new ResponseEntity<>(contaService.procurarPeloId(id), HttpStatus.OK);
     }
 

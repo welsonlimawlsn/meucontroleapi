@@ -28,13 +28,13 @@ public class SaldoEndpoint {
 
     @GetMapping("usuario/conta/{idConta}/saldo")
     @Transactional
-    public ResponseEntity<Saldo> saldoMesAtualContaEspecifica(@PathVariable Long idConta, @RequestParam(value = "fimMes", required = false) boolean fimDeMes) {
+    public ResponseEntity<Saldo> saldoMesAtualContaEspecifica(@PathVariable String idConta, @RequestParam(value = "fimMes", required = false) boolean fimDeMes) {
         return new ResponseEntity<>(saldoService.getSaldo(new SaldoPorConta(new Conta(idConta), fimDeMes)), OK);
     }
 
     @GetMapping("usuario/conta/{idConta}/saldo/{dataLimite}")
     @Transactional
-    public ResponseEntity<Saldo> saldoDataLimiteContaEspecifica(@PathVariable Long idConta, @PathVariable LocalDate dataLimite) {
+    public ResponseEntity<Saldo> saldoDataLimiteContaEspecifica(@PathVariable String idConta, @PathVariable LocalDate dataLimite) {
         return new ResponseEntity<>(saldoService.getSaldo(new SaldoPorConta(new Conta(idConta), dataLimite)), OK);
     }
 

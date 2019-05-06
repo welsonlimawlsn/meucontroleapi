@@ -1,5 +1,6 @@
 package br.com.welson.meucontrole.persistencia.modelos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,17 +15,17 @@ import static javax.persistence.GenerationType.AUTO;
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Categoria implements IEntidade<Long> {
+public class Categoria implements IEntidade<String> {
 
     @Id
-    @GeneratedValue(strategy = AUTO)
     @EqualsAndHashCode.Include
-    private Long id;
+    private String id;
 
     @Column(nullable = false, unique = true)
     private String nome;
 
     @OneToMany(mappedBy = "categoria")
+    @JsonIgnore
     private List<Movimentacao> movimentacoes;
 
     public Categoria() {
@@ -35,7 +36,12 @@ public class Categoria implements IEntidade<Long> {
     }
 
     @Override
-    public Long getIdentificador() {
+    public String getIdentificador() {
         return id;
+    }
+
+    @Override
+    public void setIdentificador(String id) {
+        this.id = id;
     }
 }

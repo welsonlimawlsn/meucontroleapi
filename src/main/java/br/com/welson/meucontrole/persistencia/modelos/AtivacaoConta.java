@@ -35,4 +35,9 @@ public class AtivacaoConta implements IEntidade<String> {
     public String getIdentificador() {
         return hash;
     }
+
+    @Override
+    public void setIdentificador(String id) {
+        throw new UnsupportedOperationException("Não é possivel \"settar\" um identificador dessa forma");
+    }
 }

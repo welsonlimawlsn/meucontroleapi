@@ -6,9 +6,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Optional;
 
-public interface ContaRepositorio extends PagingAndSortingRepository<Conta, Long> {
+public interface ContaRepositorio extends PagingAndSortingRepository<Conta, String> {
 
     Iterable<Conta> findByUsuario(Usuario usuario);
 
-    Optional<Conta> findByIdAndUsuario(Long id, Usuario usuario);
+    Optional<Conta> findByIdAndUsuario(String id, Usuario usuario);
 }

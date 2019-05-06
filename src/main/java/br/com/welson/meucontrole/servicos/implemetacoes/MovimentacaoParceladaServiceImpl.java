@@ -20,7 +20,7 @@ public class MovimentacaoParceladaServiceImpl implements MovimentacaoParceladaSe
     }
 
     @Override
-    public MovimentacaoParcelada procurarPeloId(Long id) {
+    public MovimentacaoParcelada procurarPeloId(String id) {
         return null;
     }
 

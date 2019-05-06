@@ -66,4 +66,9 @@ public class Usuario implements IEntidade<String> {
     public String getIdentificador() {
         return usuario;
     }
+
+    @Override
+    public void setIdentificador(String id) {
+        throw new UnsupportedOperationException("Não é possivel \"settar\" um identificador dessa forma");
+    }
 }

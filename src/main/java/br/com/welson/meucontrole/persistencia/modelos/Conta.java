@@ -9,20 +9,17 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 
-import static javax.persistence.GenerationType.AUTO;
-
 @Entity
 @Table(name = "tbl_contas")
 @Getter
 @Setter
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Conta implements IEntidade<Long> {
+public class Conta implements IEntidade<String> {
 
     @Id
-    @GeneratedValue(strategy = AUTO)
     @EqualsAndHashCode.Include
-    private Long id;
+    private String id;
 
     @JsonIgnore
     @ManyToOne(optional = false)
@@ -50,12 +47,13 @@ public class Conta implements IEntidade<Long> {
         this.nome = nome;
     }
 
-    public Conta(Long id) {
-        this.id = id;
+    @Override
+    public String getIdentificador() {
+        return id;
     }
 
     @Override
-    public Long getIdentificador() {
-        return id;
+    public void setIdentificador(String id) {
+        this.id = id;
     }
 }

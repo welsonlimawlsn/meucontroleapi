@@ -17,12 +17,11 @@ import static javax.persistence.InheritanceType.TABLE_PER_CLASS;
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public abstract class Movimentacao implements IEntidade<Long> {
+public abstract class Movimentacao implements IEntidade<String> {
 
     @Id
-    @GeneratedValue(strategy = AUTO)
     @EqualsAndHashCode.Include
-    private Long id;
+    private String id;
 
     @Column(nullable = false)
     private String descricao;
@@ -80,7 +79,12 @@ public abstract class Movimentacao implements IEntidade<Long> {
     }
 
     @Override
-    public Long getIdentificador() {
+    public String getIdentificador() {
         return id;
+    }
+
+    @Override
+    public void setIdentificador(String id) {
+        this.id = id;
     }
 }

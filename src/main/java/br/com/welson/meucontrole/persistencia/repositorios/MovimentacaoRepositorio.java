@@ -7,7 +7,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface MovimentacaoRepositorio extends PagingAndSortingRepository<Movimentacao, Long> {
+public interface MovimentacaoRepositorio extends PagingAndSortingRepository<Movimentacao, String> {
 
     List<Movimentacao> findByConta_UsuarioAndDataBetween(Usuario usuario, LocalDate inicio, LocalDate fim);
 

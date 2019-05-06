@@ -36,14 +36,14 @@ public class MovimentacaoServiceImpl implements MovimentacaoService {
     }
 
     @Override
-    public Movimentacao criar(Movimentacao movimentacao, Long idConta) {
+    public Movimentacao criar(Movimentacao movimentacao, String idConta) {
         Conta conta = contaService.procurarPeloId(idConta);
         movimentacao.setConta(conta);
         return criar(movimentacao);
     }
 
     @Override
-    public MovimentacaoParcelada criar(MovimentacaoParcelada movimentacaoParcelada, Long idConta, MovimentacaoIntanciavel movimentacaoIntanciavel) {
+    public MovimentacaoParcelada criar(MovimentacaoParcelada movimentacaoParcelada, String idConta, MovimentacaoIntanciavel movimentacaoIntanciavel) {
         Conta conta = contaService.procurarPeloId(idConta);
         movimentacaoParcelada.setConta(conta);
         movimentacaoParcelada.setMovimentacoes(new ArrayList<>());
@@ -63,7 +63,7 @@ public class MovimentacaoServiceImpl implements MovimentacaoService {
     }
 
     @Override
-    public Movimentacao procurarPeloId(Long id) {
+    public Movimentacao procurarPeloId(String id) {
         return null;
     }
 

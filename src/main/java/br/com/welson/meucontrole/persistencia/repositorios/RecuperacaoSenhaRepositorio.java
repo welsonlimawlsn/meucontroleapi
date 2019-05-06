@@ -5,7 +5,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Optional;
 
-public interface RecuperacaoSenhaRepositorio extends PagingAndSortingRepository<RecuperacaoSenha, Long> {
+public interface RecuperacaoSenhaRepositorio extends PagingAndSortingRepository<RecuperacaoSenha, String> {
 
     Optional<RecuperacaoSenha> findByHash(String hash);
 }

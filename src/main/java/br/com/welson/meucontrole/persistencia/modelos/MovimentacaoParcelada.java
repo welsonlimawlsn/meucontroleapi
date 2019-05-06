@@ -17,12 +17,11 @@ import static javax.persistence.GenerationType.AUTO;
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class MovimentacaoParcelada implements IEntidade<Long> {
+public class MovimentacaoParcelada implements IEntidade<String> {
 
     @Id
-    @GeneratedValue(strategy = AUTO)
     @EqualsAndHashCode.Include
-    private Long id;
+    private String id;
 
     @Column(nullable = false)
     private String descricao;
@@ -59,7 +58,12 @@ public class MovimentacaoParcelada implements IEntidade<Long> {
     }
 
     @Override
-    public Long getIdentificador() {
+    public String getIdentificador() {
         return id;
+    }
+
+    @Override
+    public void setIdentificador(String id) {
+        this.id = id;
     }
 }

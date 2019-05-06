@@ -5,7 +5,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Optional;
 
-public interface AtivacaoContaRepositorio extends PagingAndSortingRepository<AtivacaoConta, Long> {
+public interface AtivacaoContaRepositorio extends PagingAndSortingRepository<AtivacaoConta, String> {
 
     Optional<AtivacaoConta> findByHash(String hash);
 }

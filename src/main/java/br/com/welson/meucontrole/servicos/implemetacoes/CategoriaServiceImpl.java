@@ -22,7 +22,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     }
 
     @Override
-    public Categoria procurarPeloId(Long id) {
+    public Categoria procurarPeloId(String id) {
         if (id != null) {
             return categoriaRepositorio.findById(id).orElseThrow(() -> new NotFoundException(CATEGORIA_NAO_EXISTE));
         }

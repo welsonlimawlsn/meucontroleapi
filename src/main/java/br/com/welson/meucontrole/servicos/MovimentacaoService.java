@@ -7,11 +7,11 @@ import br.com.welson.meucontrole.util.MovimentacaoIntanciavel;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface MovimentacaoService extends CrudService<Movimentacao, Long> {
+public interface MovimentacaoService extends CrudService<Movimentacao, String> {
 
-    Movimentacao criar(Movimentacao receita, Long idConta);
+    Movimentacao criar(Movimentacao receita, String idConta);
 
-    MovimentacaoParcelada criar(MovimentacaoParcelada movimentacaoParcelada, Long idConta, MovimentacaoIntanciavel movimentacaoIntanciavel);
+    MovimentacaoParcelada criar(MovimentacaoParcelada movimentacaoParcelada, String idConta, MovimentacaoIntanciavel movimentacaoIntanciavel);
 
     List<Movimentacao> getMovimentacoesEntre(LocalDate inicio, LocalDate fim);
 }
