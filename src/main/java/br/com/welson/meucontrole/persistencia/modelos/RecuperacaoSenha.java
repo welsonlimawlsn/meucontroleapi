@@ -1,5 +1,6 @@
 package br.com.welson.meucontrole.persistencia.modelos;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,11 +13,14 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@AllArgsConstructor
 public class RecuperacaoSenha implements IEntidade<String> {
 
-    @Column(nullable = false)
     @Id
     @EqualsAndHashCode.Include
+    private String id;
+
+    @Column(nullable = false, unique = true)
     private String hash;
 
     @Column(nullable = false)
@@ -29,13 +33,6 @@ public class RecuperacaoSenha implements IEntidade<String> {
     private Usuario usuario;
 
     public RecuperacaoSenha() {
-    }
-
-    public RecuperacaoSenha(String hash, LocalDateTime validade, Boolean usado, Usuario usuario) {
-        this.hash = hash;
-        this.validade = validade;
-        this.usado = usado;
-        this.usuario = usuario;
     }
 
     @Override

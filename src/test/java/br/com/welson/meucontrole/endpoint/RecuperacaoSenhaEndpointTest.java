@@ -43,7 +43,7 @@ public class RecuperacaoSenhaEndpointTest {
     private TestRestTemplate testRestTemplate;
 
     public static RecuperacaoSenha mockRecuperacaoSenha() {
-        return new RecuperacaoSenha("", LocalDateTime.now().plusMinutes(30), false, UsuarioEndpointTest.mockUsuario());
+        return new RecuperacaoSenha("","", LocalDateTime.now().plusMinutes(30), false, UsuarioEndpointTest.mockUsuario());
     }
 
     @Before

@@ -1,23 +1,25 @@
 package br.com.welson.meucontrole.persistencia.modelos;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "tbl_ativacoes_contas")
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@AllArgsConstructor
 public class AtivacaoConta implements IEntidade<String> {
 
     @Id
     @EqualsAndHashCode.Include
+    private String id;
+
+    @Column(unique = true, nullable = false)
     private String hash;
 
     @OneToOne(optional = false)
@@ -26,18 +28,13 @@ public class AtivacaoConta implements IEntidade<String> {
     public AtivacaoConta() {
     }
 
-    public AtivacaoConta(String hash, Usuario usuario) {
-        this.hash = hash;
-        this.usuario = usuario;
-    }
-
     @Override
     public String getIdentificador() {
-        return hash;
+        return id;
     }
 
     @Override
     public void setIdentificador(String id) {
-        throw new UnsupportedOperationException("Não é possivel \"settar\" um identificador dessa forma");
+        this.id = id;
     }
 }

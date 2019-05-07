@@ -40,7 +40,7 @@ public class AtivacaoContaEndpointTest {
     private AtivacaoConta ativacaoConta = mockAtivacaoConta();
 
     public static AtivacaoConta mockAtivacaoConta() {
-        return new AtivacaoConta("B7AD2350C2A4C394373E59786F814E32D91AEE9604A5B57DC7023CF1074694E4", UsuarioEndpointTest.mockUsuario());
+        return new AtivacaoConta("T0qWgrfjuhL8wW9","B7AD2350C2A4C394373E59786F814E32D91AEE9604A5B57DC7023CF1074694E4", UsuarioEndpointTest.mockUsuario());
     }
 
     @Before

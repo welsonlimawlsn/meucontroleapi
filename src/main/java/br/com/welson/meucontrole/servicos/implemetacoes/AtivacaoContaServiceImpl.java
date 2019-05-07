@@ -8,6 +8,7 @@ import br.com.welson.meucontrole.servicos.AtivacaoContaService;
 import br.com.welson.meucontrole.servicos.EmailService;
 import br.com.welson.meucontrole.util.AtivacaoContaTemplate;
 import br.com.welson.meucontrole.util.ConstantesDeConfiguracao;
+import br.com.welson.meucontrole.util.GeradorDeIDs;
 import br.com.welson.meucontrole.util.Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class AtivacaoContaServiceImpl implements AtivacaoContaService {
 
     @Override
     public AtivacaoConta criar(Usuario usuario) {
-        AtivacaoConta ativacaoConta = new AtivacaoConta(gerarHash(usuario), usuario);
+        AtivacaoConta ativacaoConta = new AtivacaoConta(GeradorDeIDs.gerar(), gerarHash(usuario), usuario);
         enviarEmail(usuario, ativacaoConta);
         return ativacaoContaRepositorio.save(ativacaoConta);
     }

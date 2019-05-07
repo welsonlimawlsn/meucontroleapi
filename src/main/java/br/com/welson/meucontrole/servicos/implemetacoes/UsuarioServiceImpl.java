@@ -37,7 +37,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario criar(Usuario entidade) {
-        ValidaCamposEntidade.validar(new ValidaUsuario(entidade, true, usuarioRepositorio), false);
+        ValidaCamposEntidade.validar(new ValidaUsuario(entidade, true, usuarioRepositorio), true);
         setValoresPadroes(entidade);
         Usuario usuarioCriado = usuarioRepositorio.save(entidade);
         contaService.criar(new Conta(usuarioCriado, "Carteira"));
@@ -59,8 +59,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     private void verificarSeUsuarioExiste(Usuario entidade) {
-        if (entidade.getUsuario() != null) {
-            usuarioRepositorio.findById(entidade.getUsuario()).orElseThrow(() -> new BadRequestException(USUARIO_NAO_EXISTE));
+        if (entidade.getId() != null) {
+            usuarioRepositorio.findById(entidade.getId()).orElseThrow(() -> new BadRequestException(USUARIO_NAO_EXISTE));
         }
     }
 

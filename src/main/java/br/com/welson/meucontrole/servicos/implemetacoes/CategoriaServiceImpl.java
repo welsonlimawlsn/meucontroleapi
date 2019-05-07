@@ -47,6 +47,6 @@ public class CategoriaServiceImpl implements CategoriaService {
 
     @Override
     public Iterable<Categoria> listarTodos() {
-        return null;
+        return categoriaRepositorio.findAll();
     }
 }

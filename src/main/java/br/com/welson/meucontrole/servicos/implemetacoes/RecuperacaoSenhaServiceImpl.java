@@ -8,6 +8,7 @@ import br.com.welson.meucontrole.persistencia.repositorios.RecuperacaoSenhaRepos
 import br.com.welson.meucontrole.servicos.EmailService;
 import br.com.welson.meucontrole.servicos.RecuperacaoSenhaService;
 import br.com.welson.meucontrole.servicos.UsuarioService;
+import br.com.welson.meucontrole.util.GeradorDeIDs;
 import br.com.welson.meucontrole.util.Hash;
 import br.com.welson.meucontrole.util.RecuperacaoSenhaTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +63,7 @@ public class RecuperacaoSenhaServiceImpl implements RecuperacaoSenhaService {
     public RecuperacaoSenha criar(String email) {
         Usuario usuario = usuarioService.getUsuarioPorEmail(email);
         if (usuario != null) {
-            RecuperacaoSenha recuperacaoSenha = new RecuperacaoSenha(criarHash(usuario), ZonedDateTime.now(ZoneOffset.UTC).toLocalDateTime().plusMinutes(30), false, usuario);
+            RecuperacaoSenha recuperacaoSenha = new RecuperacaoSenha(GeradorDeIDs.gerar(), criarHash(usuario), ZonedDateTime.now(ZoneOffset.UTC).toLocalDateTime().plusMinutes(30), false, usuario);
             criar(recuperacaoSenha);
             enviarEmail(recuperacaoSenha);
             return recuperacaoSenha;

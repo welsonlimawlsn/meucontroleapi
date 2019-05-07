@@ -21,6 +21,10 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 @AllArgsConstructor
 public class Usuario implements IEntidade<String> {
 
+    @Id
+    @EqualsAndHashCode.Include
+    private String id;
+
     @Column(nullable = false, length = 20)
     private String nome;
 
@@ -31,8 +35,6 @@ public class Usuario implements IEntidade<String> {
     private String email;
 
     @Column(nullable = false, unique = true, length = 20)
-    @Id
-    @EqualsAndHashCode.Include
     private String usuario;
 
     @JsonProperty(access = WRITE_ONLY)
@@ -55,20 +57,20 @@ public class Usuario implements IEntidade<String> {
     }
 
     public Usuario(Usuario usuario) {
-        this(usuario.nome, usuario.sobrenome, usuario.email, usuario.usuario, usuario.senha, usuario.administrador, usuario.ativa, usuario.contas);
+        this(usuario.id, usuario.nome, usuario.sobrenome, usuario.email, usuario.usuario, usuario.senha, usuario.administrador, usuario.ativa, usuario.contas);
     }
 
     public Usuario(String nome, String sobrenome, String email, String usuario, String senha) {
-        this(nome, sobrenome, email, usuario, senha, null, null, null);
+        this(null, nome, sobrenome, email, usuario, senha, null, null, null);
     }
 
     @Override
     public String getIdentificador() {
-        return usuario;
+        return id;
     }
 
     @Override
     public void setIdentificador(String id) {
-        throw new UnsupportedOperationException("Não é possivel \"settar\" um identificador dessa forma");
+        this.id = id;
     }
 }
