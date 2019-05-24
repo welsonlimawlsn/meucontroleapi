@@ -33,6 +33,7 @@ public class FiltroAutenticacao extends UsernamePasswordAuthenticationFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             Usuario usuario = new ObjectMapper().readValue(request.getInputStream(), Usuario.class);
+            System.out.println(request.getHeader("Device-Id"));
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(usuario.getUsuario(), usuario.getSenha()));
         } catch (IOException e) {
             throw new RuntimeException(e);
