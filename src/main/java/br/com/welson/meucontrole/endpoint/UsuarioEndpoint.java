@@ -3,7 +3,6 @@ package br.com.welson.meucontrole.endpoint;
 import br.com.welson.meucontrole.dto.UsuarioDTO;
 import br.com.welson.meucontrole.dto.UsuarioDTOResponse;
 import br.com.welson.meucontrole.servicos.UsuarioService;
-import br.com.welson.meucontrole.util.ConstantesDeConfiguracao;
 import br.com.welson.meucontrole.util.UsuarioUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URI;
+import static br.com.welson.meucontrole.util.URLBackEnd.comporURL;
+import static org.springframework.http.ResponseEntity.created;
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 public class UsuarioEndpoint {
@@ -29,15 +30,15 @@ public class UsuarioEndpoint {
     }
 
     @Transactional
-    @PostMapping(value = NOVO_USUARIO)
+    @PostMapping(NOVO_USUARIO)
     public ResponseEntity<UsuarioDTOResponse> novo(@RequestBody UsuarioDTO usuario) {
         usuarioService.criar(usuario.convertToObject());
-        return ResponseEntity.created(URI.create(ConstantesDeConfiguracao.ENDERECO_API + PATH_USUARIO)).build();
+        return created(comporURL(PATH_USUARIO)).build();
     }
 
     @Transactional
     @GetMapping(value = PATH_USUARIO)
     public ResponseEntity<UsuarioDTOResponse> getUsuario() {
-        return ResponseEntity.ok(UsuarioDTOResponse.convertToDTO(UsuarioUtil.getUsuarioLogado()));
+        return ok(UsuarioDTOResponse.convertToDTO(UsuarioUtil.getUsuarioLogado()));
     }
 }

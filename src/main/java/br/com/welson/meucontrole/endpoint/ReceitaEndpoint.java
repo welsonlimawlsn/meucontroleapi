@@ -7,7 +7,6 @@ import br.com.welson.meucontrole.persistencia.modelos.MovimentacaoParcelada;
 import br.com.welson.meucontrole.servicos.MovimentacaoService;
 import br.com.welson.meucontrole.util.InstanciaReceita;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,8 +14,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import static br.com.welson.meucontrole.endpoint.ContaEndpoint.PATH_CONTA;
+import static br.com.welson.meucontrole.util.URLBackEnd.comporURL;
+import static org.springframework.http.ResponseEntity.created;
+
 @RestController
 public class ReceitaEndpoint {
+
+    private final static String PATH_RECEITA = PATH_CONTA;
+    private final static String PATH_RECEITA_CONTA = PATH_RECEITA + "/{idConta}";
 
     private final MovimentacaoService movimentacaoService;
 
@@ -26,14 +32,16 @@ public class ReceitaEndpoint {
     }
 
     @Transactional
-    @PostMapping("usuario/conta/{idConta}/receita")
+    @PostMapping(PATH_RECEITA_CONTA + "/receita")
     public ResponseEntity<Movimentacao> nova(@RequestBody ReceitaDTO receita, @PathVariable String idConta) {
-        return new ResponseEntity<>(movimentacaoService.criar(receita.convertToObject(), idConta), HttpStatus.CREATED);
+        Movimentacao receitaCriada = movimentacaoService.criar(receita.convertToObject(), idConta);
+        return created(comporURL(PATH_RECEITA, idConta, "receita", receitaCriada.getId())).build();
     }
 
     @Transactional
-    @PostMapping("usuario/conta/{idConta}/receita-parcelada")
+    @PostMapping(PATH_RECEITA_CONTA + "/receita-parcelada")
     public ResponseEntity<MovimentacaoParcelada> nova(@RequestBody MovimentacaoParceladaDTO movimentacaoParcelada, @PathVariable String idConta) {
-        return new ResponseEntity<>(movimentacaoService.criar(movimentacaoParcelada.convertToObject(), idConta, new InstanciaReceita()), HttpStatus.CREATED);
+        MovimentacaoParcelada receitaParceladaCriada = movimentacaoService.criar(movimentacaoParcelada.convertToObject(), idConta, new InstanciaReceita());
+        return created(comporURL(PATH_RECEITA, idConta, "receita-parcelada", receitaParceladaCriada.getId())).build();
     }
 }

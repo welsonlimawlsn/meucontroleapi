@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 public class SaldoEndpoint {
@@ -29,24 +29,24 @@ public class SaldoEndpoint {
     @GetMapping("usuario/conta/{idConta}/saldo")
     @Transactional
     public ResponseEntity<Saldo> saldoMesAtualContaEspecifica(@PathVariable String idConta, @RequestParam(value = "fimMes", required = false) boolean fimDeMes) {
-        return new ResponseEntity<>(saldoService.getSaldo(new SaldoPorConta(new Conta(idConta), fimDeMes)), OK);
+        return ok(saldoService.getSaldo(new SaldoPorConta(new Conta(idConta), fimDeMes)));
     }
 
     @GetMapping("usuario/conta/{idConta}/saldo/{dataLimite}")
     @Transactional
     public ResponseEntity<Saldo> saldoDataLimiteContaEspecifica(@PathVariable String idConta, @PathVariable LocalDate dataLimite) {
-        return new ResponseEntity<>(saldoService.getSaldo(new SaldoPorConta(new Conta(idConta), dataLimite)), OK);
+        return ok(saldoService.getSaldo(new SaldoPorConta(new Conta(idConta), dataLimite)));
     }
 
     @GetMapping("usuario/saldo")
     @Transactional
     public ResponseEntity<String> saldoMesAtualGeral() {
-        return new ResponseEntity<>("", OK);
+        return ok("");
     }
 
     @GetMapping("usuario/saldo/{dataLimite}")
     @Transactional
     public ResponseEntity<String> saldoMesAtualGeral(@PathVariable LocalDate dataLimite) {
-        return new ResponseEntity<>("", OK);
+        return ok("");
     }
 }
