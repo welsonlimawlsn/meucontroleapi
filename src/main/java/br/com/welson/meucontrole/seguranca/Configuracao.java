@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 
+import java.util.Collections;
+
 @EnableWebSecurity
 public class Configuracao extends WebSecurityConfigurerAdapter {
 
@@ -29,7 +31,7 @@ public class Configuracao extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+        http.cors().configurationSource(request -> getCorsConfiguration())
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
@@ -38,5 +40,11 @@ public class Configuracao extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilter(new FiltroAutenticacao(authenticationManager()))
                 .addFilter(new FiltroAutorizacao(authenticationManager(), userDetailsService));
+    }
+
+    private CorsConfiguration getCorsConfiguration() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+        return corsConfiguration;
     }
 }

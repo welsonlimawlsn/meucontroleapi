@@ -2,6 +2,7 @@ package br.com.welson.meucontrole.seguranca.filtros;
 
 import br.com.welson.meucontrole.persistencia.modelos.Usuario;
 import br.com.welson.meucontrole.servicos.implemetacoes.UserDetailsServiceImpl;
+import br.com.welson.meucontrole.util.HeaderUtil;
 import br.com.welson.meucontrole.util.Token;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,6 +35,9 @@ public class FiltroAutorizacao extends BasicAuthenticationFilter {
         String header = request.getHeader(HEADER_STRING);
         if (header != null && header.startsWith(PREFIXO_TOKEN)) {
             UsernamePasswordAuthenticationToken authenticationToken = getAuthenticationToken(request);
+            if (authenticationToken != null) {
+                HeaderUtil.adicionarTokenAoHeader(response, Token.getNewToken((Usuario) authenticationToken.getPrincipal()));
+            }
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
         chain.doFilter(request, response);
